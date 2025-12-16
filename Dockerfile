@@ -11,7 +11,10 @@ RUN apt-get update && apt-get install -y \
 
 # Копирование и установка зависимостей
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Увеличение таймаутов и retry для избежания ошибок при медленном соединении
+RUN pip install --no-cache-dir --default-timeout=100 -r requirements.txt || \
+    pip install --no-cache-dir --default-timeout=100 -r requirements.txt || \
+    pip install --no-cache-dir --default-timeout=100 -r requirements.txt
 
 # Копирование проекта
 COPY . .
