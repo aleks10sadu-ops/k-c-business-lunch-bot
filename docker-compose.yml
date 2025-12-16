@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: menu-bot
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+    volumes:
+      # Монтируем конфигурацию для возможности изменения без пересборки
+      - ./config:/app/config:ro
+      # Монтируем assets для использования ваших ресурсов
+      - ./assets:/app/assets:ro
+      # Монтируем output для сохранения результатов
+      - ./output:/app/output
+    restart: unless-stopped
+

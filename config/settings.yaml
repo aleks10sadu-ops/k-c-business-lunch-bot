@@ -1,0 +1,66 @@
+# Основные настройки приложения
+bot:
+  # Токен Telegram-бота (можно задать через переменную окружения BOT_TOKEN)
+  token_env: BOT_TOKEN
+
+menu:
+  # Дни недели для парсинга
+  days: ["ПН", "ВТ", "СР", "ЧТ", "ПТ"]
+  # Максимальное количество блюд в день
+  max_dishes_per_day: 7
+
+fonts:
+  # Настройки шрифта для названия блюда
+  title:
+    file: assets/fonts/Inter.ttf
+    size: 10.05
+    uppercase: true
+  
+  # Настройки шрифта для описания блюда
+  description:
+    file: assets/fonts/Inter.ttf
+    size: 8.1
+
+layout:
+  # Межстрочный интервал (в пикселях)
+  line_spacing: 4
+  # Отступ между блюдами (в пикселях)
+  dish_spacing: 6
+
+# Настройки блока дат бизнес-ланча
+date_block:
+  # Цвет рамки (оранжевый)
+  border_color: "#F2994A"
+  # Цвет текста
+  text_color: "#000000"
+  # Радиус скругления углов
+  border_radius: 8
+  # Толщина рамки
+  border_width: 2
+
+# Настройки warning-блока для "БИЗНЕС ЛАНЧЕЙ НЕ БУДЕТ"
+warning_block:
+  # Фон блока
+  background: "#FCE4D6"
+  # Цвет рамки
+  border_color: "#C0392B"
+  # Цвет текста
+  text_color: "#C0392B"
+  # Радиус скругления углов
+  border_radius: 18
+  # Толщина рамки
+  border_width: 3
+  # Иконка (опционально)
+  icon: "!"
+  # Увеличение размера шрифта относительно обычного (множитель)
+  font_size_multiplier: 1.2
+
+output:
+  # Путь для сохранения сгенерированного изображения
+  path: output/result.png
+
+template:
+  # Путь к фоновому шаблону изображения
+  # Реальный размер: 768 × 1638 пикселей
+  image: assets/template.png
+
