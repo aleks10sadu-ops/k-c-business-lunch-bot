@@ -9,6 +9,7 @@ import logging
 import sys
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
+from aiogram.client.default import DefaultBotProperties
 
 from bot.handlers import setup_handlers
 from config.loader import ConfigLoader
@@ -39,7 +40,8 @@ async def main():
         logger.info("Конфигурация загружена успешно")
         
         # Инициализируем бота и диспетчер
-        bot = Bot(token=bot_token, parse_mode=ParseMode.HTML)
+        # В aiogram 3.7.0+ нужно использовать default для parse_mode
+        bot = Bot(token=bot_token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
         dp = Dispatcher()
         
         # Настраиваем обработчики
