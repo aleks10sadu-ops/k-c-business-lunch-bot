@@ -4,6 +4,8 @@ services:
     container_name: menu-bot
     env_file:
       - .env
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
     volumes:
       # Монтируем конфигурацию для возможности изменения без пересборки
       - ./config:/app/config:ro
