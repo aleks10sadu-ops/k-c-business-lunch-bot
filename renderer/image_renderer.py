@@ -382,6 +382,11 @@ class ImageRenderer:
                     continue
                 
                 day_menu = menu_data[day]
+                
+                # Пропускаем дни без данных (None или пустые)
+                if day_menu is None:
+                    continue
+                
                 zone = self.zones[day]
                 
                 # Проверяем статус дня

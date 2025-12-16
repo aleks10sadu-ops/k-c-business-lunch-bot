@@ -259,4 +259,3 @@ def parse_menu(text: str, days: List[str], max_dishes_per_day: int) -> Tuple[Opt
     """
     parser = MenuParser(days, max_dishes_per_day)
     return parser.parse(text)
-
