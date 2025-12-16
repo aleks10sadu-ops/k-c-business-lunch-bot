@@ -4,8 +4,6 @@ services:
     container_name: menu-bot
     env_file:
       - .env
-    environment:
-      - BOT_TOKEN=${BOT_TOKEN}
     volumes:
       # Монтируем конфигурацию для возможности изменения без пересборки
       - ./config:/app/config:ro
@@ -13,5 +11,9 @@ services:
       - ./assets:/app/assets:ro
       # Монтируем output для сохранения результатов
       - ./output:/app/output
+      # Монтируем код Python для возможности изменения без пересборки
+      - ./bot:/app/bot:ro
+      - ./renderer:/app/renderer:ro
+      - ./config_loader.py:/app/config_loader.py:ro
     restart: unless-stopped
 

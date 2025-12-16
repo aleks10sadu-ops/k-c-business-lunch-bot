@@ -104,7 +104,10 @@ class TextLayout:
         text: str,
         position: Tuple[int, int],
         max_width: int,
-        fill: Tuple[int, int, int] = (0, 0, 0)
+        fill: Tuple[int, int, int] = (0, 0, 0),
+        stroke_width: int = 0,
+        stroke_fill: Tuple[int, int, int] = (0, 0, 0),
+        letter_spacing: int = 0
     ) -> int:
         """
         Рисует многострочный текст с автоматическим переносом.
@@ -115,6 +118,9 @@ class TextLayout:
             position: Начальная позиция (x, y)
             max_width: Максимальная ширина в пикселях
             fill: Цвет текста (RGB)
+            stroke_width: Толщина обводки (0 = без обводки)
+            stroke_fill: Цвет обводки (RGB)
+            letter_spacing: Отступ между буквами в пикселях (0 = без отступа)
             
         Returns:
             Высота нарисованного текста
@@ -125,12 +131,45 @@ class TextLayout:
         current_y = y
         
         for i, line in enumerate(lines):
-            draw.text((x, current_y), line, font=self.font, fill=fill)
+            if letter_spacing > 0:
+                # Рисуем каждую букву отдельно с отступом
+                current_x = x
+                for char in line:
+                    if char == ' ':
+                        # Для пробелов используем обычную ширину
+                        bbox = draw.textbbox((current_x, current_y), ' ', font=self.font)
+                        current_x = bbox[2]
+                    else:
+                        # Рисуем букву с обводкой (если указана)
+                        draw.text(
+                            (current_x, current_y),
+                            char,
+                            font=self.font,
+                            fill=fill,
+                            stroke_width=int(stroke_width) if stroke_width > 0 else 0,
+                            stroke_fill=stroke_fill if stroke_width > 0 else None
+                        )
+                        # Получаем ширину буквы и добавляем отступ
+                        bbox = draw.textbbox((current_x, current_y), char, font=self.font)
+                        char_width = bbox[2] - bbox[0]
+                        current_x += char_width + letter_spacing
+            else:
+                # Рисуем текст обычным способом (без letter spacing)
+                draw.text(
+                    (x, current_y),
+                    line,
+                    font=self.font,
+                    fill=fill,
+                    stroke_width=stroke_width if stroke_width > 0 else 0,
+                    stroke_fill=stroke_fill if stroke_width > 0 else None
+                )
             
             # Рассчитываем высоту текущей строки
             bbox = draw.textbbox((x, current_y), line, font=self.font)
             line_height = bbox[3] - bbox[1]
             
+            # Всегда добавляем line_spacing после строки (кроме последней)
+            # Это гарантирует минимальный отступ 5px между строками
             if i < len(lines) - 1:
                 current_y += line_height + self.line_spacing
             else:

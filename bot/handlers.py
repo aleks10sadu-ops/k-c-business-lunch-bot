@@ -132,6 +132,9 @@ async def handle_menu_text(message: Message):
     template_path = settings.get('template', {}).get('image', 'assets/template.png')
     output_path = settings.get('output', {}).get('path', 'output/result.png')
     
+    # Получаем настройку отображения отладочных рамок (по умолчанию false)
+    show_debug_borders = settings.get('bot', {}).get('show_zone_borders', False)
+    
     renderer = ImageRenderer(
         template_path=template_path,
         zones=zones,
@@ -140,7 +143,7 @@ async def handle_menu_text(message: Message):
         warning_config=warning_config
     )
     
-    error_msg = renderer.render(parsed_data, output_path, date_config, warning_config)
+    error_msg = renderer.render(parsed_data, output_path, date_config, warning_config, show_debug_borders)
     
     if error_msg:
         await message.answer(f"❌ Ошибка генерации изображения: {error_msg}")
