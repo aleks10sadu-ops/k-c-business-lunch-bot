@@ -6,7 +6,7 @@
 
 ## Параметры конвертации
 
-- **Размер:** 768 × 1638 пикселей (вертикальная ориентация)
+- **Размер:** 797 × 1132 пикселей (вертикальная ориентация)
 - **Формат:** PNG с альфа-каналом (если нужна прозрачность) или без
 - **Примечание:** Разрешение зависит от исходного PDF и нужного размера
 
@@ -17,25 +17,25 @@
 1. Откройте PDF файл
 2. Файл → Экспорт → Изображение → PNG
 3. Настройки:
-   - Размер: 768 × 1638 пикселей
+   - Размер: 797 × 1132 пикселей
    - Или используйте разрешение, которое даст нужный размер
 4. Сохраните как `assets/template.png`
 
 ### 2. Inkscape (бесплатно)
 
 ```bash
-inkscape --export-type=png --export-width=768 --export-height=1638 --export-filename=assets/template.png input.pdf
+inkscape --export-type=png --export-width=797 --export-height=1132 --export-filename=assets/template.png input.pdf
 ```
 
 Или через GUI:
 1. Откройте PDF в Inkscape
 2. Файл → Экспортировать растровое изображение
-3. Установите размер: 768 × 1638 px
+3. Установите размер: 797 × 1132 px
 
 ### 3. ImageMagick (командная строка)
 
 ```bash
-convert -resize 768x1638! input.pdf assets/template.png
+convert -resize 797x1132! input.pdf assets/template.png
 ```
 
 **Примечание:** `!` означает точный размер без сохранения пропорций
@@ -65,8 +65,8 @@ images = convert_from_path('input.pdf', dpi=72)
 if images:
     img = images[0]
     # Убеждаемся, что размер правильный
-    if img.size != (768, 1638):
-        img = img.resize((768, 1638), Image.Resampling.LANCZOS)
+    if img.size != (797, 1132):
+        img = img.resize((797, 1132), Image.Resampling.LANCZOS)
     img.save('assets/template.png', 'PNG')
 ```
 
@@ -90,13 +90,13 @@ file assets/template.png
 ```python
 from PIL import Image
 img = Image.open('assets/template.png')
-print(f"Size: {img.size}")  # Должно быть (768, 1638)
+print(f"Size: {img.size}")  # Должно быть (797, 1132)
 ```
 
 ## Устранение проблем
 
 **Размер не совпадает:**
 - Проверьте ориентацию страницы (должна быть вертикальная)
-- Если размер отличается, используйте `resize` для приведения к 768 × 1638 пикселей
+- Если размер отличается, используйте `resize` для приведения к 797 × 1132 пикселей
 - При изменении размера координаты в `zones.yaml` нужно пересчитать пропорционально
 
