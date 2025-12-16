@@ -17,7 +17,7 @@ Get-Content .env
 
 Должно быть:
 ```
-BOT_TOKEN=8551090571:AAFbxttR3yrRTMH3kCp7jCvcgQG3ZPFDbQ0
+BOT_TOKEN=
 ```
 
 **Проверьте:**
@@ -63,7 +63,7 @@ docker-compose logs -f
 
 ```powershell
 docker-compose down
-$env:BOT_TOKEN="8551090571:AAFbxttR3yrRTMH3kCp7jCvcgQG3ZPFDbQ0"
+$env:BOT_TOKEN=""
 docker-compose up -d
 ```
 
@@ -84,7 +84,7 @@ docker-compose up -d
 2. **Проверьте кодировку .env файла:**
    ```powershell
    # Пересоздайте файл в правильной кодировке
-   "BOT_TOKEN=8551090571:AAFbxttR3yrRTMH3kCp7jCvcgQG3ZPFDbQ0" | Out-File -Encoding utf8 -NoNewline .env
+   "BOT_TOKEN=" | Out-File -Encoding utf8 -NoNewline .env
    ```
 
 3. **Используйте абсолютный путь к .env:**
