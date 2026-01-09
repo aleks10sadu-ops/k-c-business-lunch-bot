@@ -123,8 +123,8 @@ class MenuParser:
         current_day_lines = []
         
         # Регулярное выражение для извлечения блюда
-        # Формат: "1. НАЗВАНИЕ [описание]"
-        dish_pattern = re.compile(r'^\d+\.\s*(.+?)\s*\[(.+?)\]$')
+        # Формат: "1. НАЗВАНИЕ [описание]" или "1. НАЗВАНИЕ" (без квадратных скобок)
+        dish_pattern = re.compile(r'^\d+\.\s*(.+?)(?:\s*\[(.*)\])?\s*$')
         
         # Паттерн для "БИЗНЕС ЛАНЧЕЙ НЕ БУДЕТ"
         disabled_pattern = re.compile(r'БИЗНЕС\s+ЛАНЧЕЙ\s+НЕ\s+БУДЕТ', re.IGNORECASE)
@@ -175,8 +175,8 @@ class MenuParser:
         for day, day_menu in result.items():
             if day_menu.status == "normal":
                 for dish in day_menu.dishes:
-                    if not dish.get("title") or not dish.get("desc"):
-                        return None, f"У блюда в дне {day} отсутствует название или описание"
+                    if not dish.get("title"):
+                        return None, f"У блюда в дне {day} отсутствует название"
                 
                 if len(day_menu.dishes) > self.max_dishes_per_day:
                     return None, (
@@ -217,7 +217,9 @@ class MenuParser:
             dish_match = dish_pattern.match(line)
             if dish_match:
                 title = dish_match.group(1).strip()
-                description = dish_match.group(2).strip()
+                description = dish_match.group(2)
+                # Если квадратных скобок нет, group(2) вернёт None
+                description = description.strip() if description else ""
                 dishes.append({
                     "title": title,
                     "desc": description
