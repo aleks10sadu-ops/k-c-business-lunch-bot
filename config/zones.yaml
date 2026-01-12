@@ -1,28 +1,28 @@
 ПН:
   max_height: 289
-  width: 340
-  x: 29
+  width: 373
+  x: 14
   y: 89
 ВТ:
   max_height: 289
-  width: 340
-  x: 29
+  width: 373
+  x: 14
   y: 446
 СР:
   max_height: 289
-  width: 340
-  x: 29
-  y: 802
+  width: 373
+  x: 14
+  y: 801
 ЧТ:
   max_height: 289
-  width: 340
-  x: 446
+  width: 373
+  x: 413
   y: 272
 ПТ:
   max_height: 289
-  width: 340
-  x: 446
-  y: 629
+  width: 373
+  x: 413
+  y: 626
 date_block:
   height: 50
   width: 160
