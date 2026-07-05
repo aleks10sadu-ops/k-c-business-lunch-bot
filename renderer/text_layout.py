@@ -98,6 +98,34 @@ class TextLayout:
         
         return total_height
     
+    def rendered_text_height(self, text_lines: List[str]) -> int:
+        """
+        Высота блока текста так, как его реально занимает рендер:
+        строки продвигаются на "тесную" высоту (bbox[3]-bbox[1]) + line_spacing,
+        а нижняя граница последней строки берётся как абсолютный bbox[3]
+        (включает верхний отступ шрифта). Именно так _render_day_menu
+        вычисляет нижнюю границу названия блюда.
+
+        Args:
+            text_lines: Список строк текста
+
+        Returns:
+            Высота блока в пикселях
+        """
+        if not text_lines:
+            return 0
+
+        temp_img = Image.new('RGB', (100, 100))
+        temp_draw = ImageDraw.Draw(temp_img)
+
+        y = 0
+        for line in text_lines[:-1]:
+            bbox = temp_draw.textbbox((0, y), line, font=self.font)
+            y += (bbox[3] - bbox[1]) + self.line_spacing
+
+        bbox = temp_draw.textbbox((0, y), text_lines[-1], font=self.font)
+        return bbox[3]
+
     def draw_text_multiline(
         self,
         draw: ImageDraw.ImageDraw,
