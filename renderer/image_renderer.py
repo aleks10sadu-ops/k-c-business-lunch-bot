@@ -207,7 +207,9 @@ class ImageRenderer:
                 
                 # Используем доступную ширину (с учетом отступов)
                 title_lines = temp_title_layout.wrap_text(formatted_title, available_width)
-                title_height = temp_title_layout.calculate_text_height(title_lines)
+                # Меряем так же, как рендерит _render_day_menu (абсолютный bbox[3] последней строки),
+                # иначе размер подбирается с недооценкой высоты и описания вылезают за зону
+                title_height = temp_title_layout.rendered_text_height(title_lines)
                 
                 desc_lines = temp_desc_layout.wrap_text(description, available_width)
                 desc_height = temp_desc_layout.calculate_text_height(desc_lines)
@@ -246,7 +248,7 @@ class ImageRenderer:
             formatted_title = self._format_title(title)
             
             title_lines = optimal_title_layout.wrap_text(formatted_title, available_width)
-            title_height = optimal_title_layout.calculate_text_height(title_lines)
+            title_height = optimal_title_layout.rendered_text_height(title_lines)
             
             desc_lines = optimal_desc_layout.wrap_text(description, available_width)
             desc_height = optimal_desc_layout.calculate_text_height(desc_lines)
